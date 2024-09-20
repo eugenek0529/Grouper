@@ -1,0 +1,37 @@
+.discover {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    a {
+        align-self: flex-end;
+        margin-right: 20px;
+        text-decoration: none;
+        color: inherit;
+        font-weight: 700;
+
+        cursor: pointer;
+    }
+}
+
+
+.discover-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+    grid-gap: 20px; /* Space between the cards */
+    width: 100%;
+    max-width: 1200px; /* Control the width of the grid */
+    padding: 20px;
+}
+
+.project-card {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 2px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-height: 130px; /* Adjust this for a rectangular look */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+   
+}
