@@ -8,6 +8,6 @@ const UserSchema = new Schema({
     password: {type:String, required: true}, 
 }, { timestamps: true }) 
 
-const User = mongoose.model('User', UserSchema); 
+const User = mongoose.model('User', UserSchema);  //  User is now collection name in db
 
 export default User;

@@ -1,4 +1,4 @@
-// Tags collection
+// Tag collection
 // postIds is array of postIds that contains the tags, used for query
 
 import mongoose from "mongoose";
@@ -13,6 +13,6 @@ const tagSchema = new Schema({
 
 }, { timestamps: true }) 
 
-const Tags = mongoose.model('Tags', tagSchema); 
+const Tag = mongoose.model('Tag', tagSchema); 
 
-export default Tags;
+export default Tag;
