@@ -1,1 +1,32 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables (for sensitive data like database URIs, API keys)
 .env
+
+# Process ID files
+pids/
+*.pid
+*.seed
+
+# Cache and temporary files
+.cache/
+tmp/
+
+# Coverage directory (when using testing frameworks)
+coverage/
+
+# IDE/Editor-specific files
+.vscode/
+.idea/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
