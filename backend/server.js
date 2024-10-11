@@ -28,6 +28,8 @@ app.listen(SERVER_PORT, () => {
     console.log(`server is connected to ${SERVER_PORT}`);
 })
 
+// Checking if I can push changes
+
 
 // Routes
 app.use("/api/users", userRoutes); 
