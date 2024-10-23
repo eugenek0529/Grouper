@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 import connectToDB from "./database/connectToDB.js"
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import tagsRoutes from "./routes/tags.routes.js";
+import postRoutes from "./routes/post.routes.js";
 
 // app setup
 dotenv.config();  
