@@ -27,7 +27,7 @@ export const createPost = async (req, res) => {
         title: newPost.title,
         creatorId: newPost.creatorId,
         description: newPost.description,
-        location: newPost``.location,
+        location: newPost.location,
         meetingStyle: newPost.meetingStyle,
         tags: newPost.tags,
         capacity: newPost.capacity,
