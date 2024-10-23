@@ -3,9 +3,8 @@ import cors from 'cors';
 import dotenv from "dotenv";
 
 import connectToDB from "./database/connectToDB.js"
-
-import userRoutes from "./routes/user.routes.js";
 import authRoutes from "./routes/auth.routes.js";
+import userRoutes from "./routes/user.routes.js";
 
 // app setup
 dotenv.config();  
@@ -34,4 +33,6 @@ app.listen(SERVER_PORT, () => {
 
 // Routes
 app.use("/api/users", userRoutes);
-app.use("/api/auth", authRoutes) 
+app.use("/api/auth", authRoutes); 
+app.use("/api/tags", tagsRoutes); 
+app.use("/api/posts", postRoutes); 
