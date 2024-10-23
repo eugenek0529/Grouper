@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import connectToDB from "./database/connectToDB.js"
 
 import userRoutes from "./routes/user.routes.js";
+import authRoutes from "./routes/auth.routes.js";
 
 // app setup
 dotenv.config();  
@@ -32,4 +33,5 @@ app.listen(SERVER_PORT, () => {
 // Checking changes - Leo
 
 // Routes
-app.use("/api/users", userRoutes); 
+app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes) 
