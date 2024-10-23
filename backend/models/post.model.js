@@ -22,16 +22,11 @@ const PostSchema = new Schema({
         required: true,
         enum: ['in-person', 'online', 'hybrid'],
     },
-    tags: {
-        type: [
-            {
-              type: Schema.Types.ObjectId,
-              ref: 'Tags' // Reference to Tags collection
-            }
-        ],
-        default: [], // default is empty array
-
-    }, 
+    tags: [{ 
+        type: Schema.Types.ObjectId, 
+        ref: 'Tag',
+        default: [] // default is empty array
+    }],
     capacity: {
         type: Number,
         required: true,
@@ -41,7 +36,16 @@ const PostSchema = new Schema({
         enum: ['open', 'closed', 'in-progress'],
         default: 'open',
     }, 
-    // TODO - applicant attribute
+    applicants: [{ 
+        type: Schema.Types.ObjectId, 
+        ref: 'User',
+        default: [] // default is empty array
+    }],
+    members: [{ 
+        type: Schema.Types.ObjectId, 
+        ref: 'User',
+        default: [] // default is empty array
+    }],
 }, { timestamps: true }) 
 
 const Post = mongoose.model('Post', PostSchema);  //  Post is now collection name in db
