@@ -1,20 +1,20 @@
 import React from 'react'
 import './navbar.css'
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function Navbar() {
   return (
     <nav>
         <h1>
-            <Link to="/" className='logo'>
+            <NavLink to="/" className='logo'>
                 Grouper
-            </Link>
+            </NavLink>
         </h1>
         <div className="right-section">
             <ul className='nav-menu'>
-                <li><Link to="/projects">Projects</Link></li>
-                <li><Link to="/community">Community</Link></li>
-                <li><Link to="portfolio">Portfolio</Link></li>
+                <li><NavLink to="/projects">Projects</NavLink></li>
+                <li><NavLink to="/community">Community</NavLink></li>
+                <li><NavLink to="portfolio">Portfolio</NavLink></li>
             </ul> 
 
             <div className="user-section">
