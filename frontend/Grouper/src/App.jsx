@@ -1,3 +1,5 @@
+import './App.css'
+
 import {
   createBrowserRouter, 
   createRoutesFromElements, 
@@ -10,6 +12,9 @@ import HomePage from './pages/HomePage/HomePage';
 import Proejcts from './pages/Projects/Projects';
 import Community from './pages/Community/Community';
 import Portfolio from './pages/Portfolio/Portfolio';
+import SignUp from './pages/SignUp/SignUp';
+import Login from './pages/Login/Login';
+
 
 
 // layouts
@@ -25,12 +30,17 @@ const router = createBrowserRouter(
       <Route path="/projects" element={<Proejcts />} />
       <Route path="/community" element={<Community />} />
       <Route path="/portfolio" element={<Portfolio />} />
-
+      <Route path='/signup' element={<SignUp />}/>
+      <Route path='/login' element={<Login />}/>
+      {
+        // TODO
+        // add signup and login route and pages
+        // add layout to projects
+      }
     </Route> 
   )
 )
 
-import './App.css'
 
 function App() {
  

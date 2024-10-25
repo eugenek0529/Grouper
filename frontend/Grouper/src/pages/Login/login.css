@@ -1,4 +1,4 @@
-.signup {
+.login {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -7,13 +7,13 @@
     min-height: 70vh;
 }
 
-.signup .left, 
-.signup .right {
+.login .left, 
+.login .right {
     flex: 1;
     padding: 10px;
 }
 
-.signup .divider {
+.login .divider {
     width: 1px;
     height: 400px; 
     background-color: #ddd;
@@ -21,7 +21,7 @@
      
 }
 
-.signup .left {
+.login .left {
     display: flex;
     flex-direction: column;
     align-items: self-start;
@@ -37,24 +37,24 @@
     }
 }
 
-.signup .right {
+.login .right {
     display: flex;
     flex-direction: column;
 }
 
-.signup .right form {
+.login .right form {
     display: flex;
     flex-direction: column;
 }
 
-.signup input {
+.login input {
     margin: 10px 0;
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
 }
 
-.signup button {
+.login button {
     margin: 10px 0;
     padding: 8px;
     background-color: #007bff;

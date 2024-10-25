@@ -14,12 +14,16 @@ function Navbar() {
             <ul className='nav-menu'>
                 <li><NavLink to="/projects">Projects</NavLink></li>
                 <li><NavLink to="/community">Community</NavLink></li>
-                <li><NavLink to="portfolio">Portfolio</NavLink></li>
+                <li><NavLink to="/portfolio">Portfolio</NavLink></li>
             </ul> 
 
             <div className="user-section">
-                <button className='login-btn'>Login</button>
-                <button className='signup-btn'>Sign up</button>
+                <button className='login-btn'>
+                    <NavLink to="/login">Login</NavLink>
+                </button>
+                <button className='signup-btn'>
+                    <NavLink to="/signup">Sign up</NavLink>
+                </button>
             </div>
 
         </div>
