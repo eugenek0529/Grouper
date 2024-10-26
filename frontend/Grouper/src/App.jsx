@@ -1,4 +1,7 @@
 import './App.css'
+import axios from 'axios';
+axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.withCredentials = true;  
 
 import {
   createBrowserRouter, 
@@ -34,7 +37,8 @@ const router = createBrowserRouter(
       <Route path='/login' element={<Login />}/>
       {
         // TODO
-        // add signup and login route and pages
+        // O - add signup and login route and pages
+        // signup and login handler, connect backend
         // add layout to projects
       }
     </Route> 

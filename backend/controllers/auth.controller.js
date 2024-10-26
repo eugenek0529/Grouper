@@ -4,19 +4,19 @@ import generateTokenAndCookie from '../utils/generateToken.js';
 
 export const signup = async (req, res) => {
     try{ 
-        const {fullname, username, password} = req.body;
-
+    const {fullname, username, password} = req.body;
+    
     // checks to see if username is already taken
     const user = await User.findOne({username});
     if (user)
     {return res.status(400).json({error:"Username already exists"})}
     
     // hash password 
-    const hashedPoassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     // new user
     const newUser = new User
-        ({fullname,username,password: hashedPoassword});
+        ({fullname,username,password: hashedPassword});
     
     // save new user
     if (newUser){

@@ -27,12 +27,13 @@
     align-items: self-start;
 
     h1 {
-        font-weight: 500;
+        font-weight: 600;
+        font-size: 40px;
     }
 
     .slogan {
         font-size: large;
-        font-weight: 800;
+        font-weight: 400;
         font-style: italic;
     }
 }
@@ -62,4 +63,18 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+
+    &:hover{
+        background-color: #007bffef;
+    }
+}
+
+.signup .right a {
+    text-decoration: none;
+    color: #333; 
+    margin-top: 10px;
+}
+
+.signup .right a:hover {
+    color: #0063ce; 
 }
