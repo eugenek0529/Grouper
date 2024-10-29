@@ -1,8 +1,14 @@
-import React from 'react'
+import React,{ useContext } from 'react'
 import './navbar.css'
 import { NavLink } from 'react-router-dom';
+import { AuthContext } from '../../contexts/authContext.jsx';
+
 
 function Navbar() {
+
+    const { user, token, logout } = useContext(AuthContext);
+
+
   return (
     <nav>
         <h1>
@@ -18,12 +24,20 @@ function Navbar() {
             </ul> 
 
             <div className="user-section">
-                <button className='login-btn'>
-                    <NavLink to="/login">Login</NavLink>
-                </button>
-                <button className='signup-btn'>
-                    <NavLink to="/signup">Sign up</NavLink>
-                </button>
+                { user ? (
+                    <button className='logout-btn' onClick={logout}>Logout</button>
+                ) : (
+                    <>
+                    <button className='signup-btn'>
+                        <NavLink to="/signup">Sign up</NavLink>
+                    </button>
+                    <button className='login-btn'>
+                        <NavLink to="/login">Login</NavLink>
+                    </button>
+                    </>
+                )}
+
+                
             </div>
 
         </div>

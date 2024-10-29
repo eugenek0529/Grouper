@@ -37,9 +37,31 @@ nav {
     button {
         margin: 0 2px;
         padding: 10px 20px;
+        background-color: #ecececc9;
         outline: none;
         border: none;
         cursor: pointer;
         font-size: small;
+        border-radius: 10px;
+
+
+        a{
+            text-decoration: none;
+            color: black;
+        }
+    }
+    .signup-btn:hover {
+        background-color: #ecececf0;
+    }
+    .login-btn {
+        background-color: #2486e2;
+        a{
+            text-decoration: none;
+            color: white;
+        }
+        
+        &:hover {
+            background-color: #2486e2f3;
+        }
     }
 }
