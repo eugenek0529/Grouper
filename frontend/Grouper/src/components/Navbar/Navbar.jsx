@@ -6,8 +6,9 @@ import { AuthContext } from '../../contexts/authContext.jsx';
 
 function Navbar() {
 
-    const { user, token, logout } = useContext(AuthContext);
-
+    const { user, logout } = useContext(AuthContext);
+  
+    
 
   return (
     <nav>
@@ -25,7 +26,12 @@ function Navbar() {
 
             <div className="user-section">
                 { user ? (
+                    <>
+                
+                    <p>Hello {user.fullname}</p>
+                    
                     <button className='logout-btn' onClick={logout}>Logout</button>
+                    </>
                 ) : (
                     <>
                     <button className='signup-btn'>
