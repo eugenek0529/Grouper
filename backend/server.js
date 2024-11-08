@@ -7,6 +7,7 @@ import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import tagsRoutes from "./routes/tags.routes.js";
 import postRoutes from "./routes/post.routes.js";
+import cookieParser from 'cookie-parser';
 
 // app setup
 dotenv.config();  
@@ -17,6 +18,7 @@ const APP_PORT = process.env.APP_PORT;
 
 // middleware
 app.use(express.json()); // to parse the incoming requests with JSON payloads (from req.body)
+app.use(cookieParser()); // Enables accessing cookies in request objects
 
 app.use(cors({
     origin: `http://localhost:${APP_PORT}`,  // Set the exact origin instead of '*'

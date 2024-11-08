@@ -1,37 +1,97 @@
+
+
 .discover {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    a {
-        align-self: flex-end;
-        margin-right: 20px;
-        text-decoration: none;
-        color: inherit;
-        font-weight: 700;
-
-        cursor: pointer;
-    }
-}
-
-
-.discover-list {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .discover h1 {
+    margin-bottom: 20px;
+  }
+  
+  .discover-list {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
-    grid-gap: 20px; /* Space between the cards */
-    width: 100%;
-    max-width: 1200px; /* Control the width of the grid */
-    padding: 20px;
-}
-
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+    gap: 20px;
+    list-style-type: none;
+    padding: 0;
+  }
+  
 .project-card {
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-radius: 2px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    min-height: 130px; /* Adjust this for a rectangular look */
+    background-color: #f4f4f4;
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    cursor: pointer;
+
+    height: 160px;
+
     display: flex;
     flex-direction: column;
-    justify-content: center;
-   
-}
+    justify-content: space-between;
+
+    .status {
+        font-size: x-small;
+        color: green;
+    }
+
+    .title {
+        margin: 0;
+    }
+
+    .postedDate {
+        font-size: x-small;
+        color: rgb(144, 144, 144);
+
+    }
+
+    .skills {
+        margin-top: 5px;
+        display: flex;
+        gap: 5px;
+
+        .skill {
+            font-size: small;
+            padding: 1px 10px;
+            border: solid 1px #d8d8d8;
+            color: #616161;
+            border-radius: 7px;
+            cursor: pointer;
+            background-color: #e3e3e3;
+        }
+    }
+
+    .divider {
+        margin-top: 30px;
+        background-color: #d8d8d8;
+        width: 100%;
+        height: 1px;
+    }
+
+    .bottom {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .location {
+            color: rgb(144, 144, 144);
+            font-size: small;
+        }
+
+        .apply-btn {
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            background-color: #68a6e1;
+            color: white;
+        }
+    }
+  }
+
+
+
+
+  

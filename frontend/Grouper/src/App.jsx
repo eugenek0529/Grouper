@@ -1,23 +1,53 @@
-import { Routes, Route } from 'react-router-dom'; 
+import './App.css'
+import axios from 'axios';
+axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.withCredentials = true;  
+
+import {
+  createBrowserRouter, 
+  createRoutesFromElements, 
+  RouterProvider,  
+  Route 
+} from 'react-router-dom'; 
+
+//pages 
 import HomePage from './pages/HomePage/HomePage';
-import Proejcts from './pages/Projects/Proejcts';
+import Projects from './pages/Projects/Projects';
 import Community from './pages/Community/Community';
 import Portfolio from './pages/Portfolio/Portfolio';
-import Navbar from './components/Navbar/Navbar';
+import SignUp from './pages/SignUp/SignUp';
+import Login from './pages/Login/Login';
 
-import './App.css'
+
+
+// layouts
+import RootLayout from './layouts/RootLayout/RootLayout';
+
+
+
+// router
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path='/' element={<RootLayout />}>
+      <Route index element={<HomePage />} />
+      <Route path="/projects" element={<Projects />} />
+      <Route path="/community" element={<Community />} />
+      <Route path="/portfolio" element={<Portfolio />} />
+      <Route path='/signup' element={<SignUp />}/>
+      <Route path='/login' element={<Login />}/>
+      {
+        
+      }
+    </Route> 
+  )
+) 
+
 
 function App() {
  
   return (
     <div className='app'>
-      <Navbar />
-      <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/projects" element={<Proejcts />} />
-          <Route path="/community" element={<Community />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-      </Routes>
+      <RouterProvider router={router} />
     </div>
   )
 }
