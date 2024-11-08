@@ -12,7 +12,7 @@ import {
 
 //pages 
 import HomePage from './pages/HomePage/HomePage';
-import Proejcts from './pages/Projects/Projects';
+import Projects from './pages/Projects/Projects';
 import Community from './pages/Community/Community';
 import Portfolio from './pages/Portfolio/Portfolio';
 import SignUp from './pages/SignUp/SignUp';
@@ -30,20 +30,17 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<RootLayout />}>
       <Route index element={<HomePage />} />
-      <Route path="/projects" element={<Proejcts />} />
+      <Route path="/projects" element={<Projects />} />
       <Route path="/community" element={<Community />} />
       <Route path="/portfolio" element={<Portfolio />} />
       <Route path='/signup' element={<SignUp />}/>
       <Route path='/login' element={<Login />}/>
       {
-        // TODO
-        // O - add signup and login route and pages
-        // signup and login handler, connect backend
-        // add layout to projects
+        
       }
     </Route> 
   )
-)
+) 
 
 
 function App() {
