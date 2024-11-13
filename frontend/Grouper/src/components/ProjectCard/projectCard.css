@@ -1,0 +1,123 @@
+/* ProjectCard.css */
+.project-card {
+    background-color: #f4f4f4;
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    cursor: pointer;
+    height: 160px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  
+  .project-card .status {
+    font-size: x-small;
+    
+    margin-bottom: 5px;
+    display: block;
+
+    .status-open {
+        color: green;
+      }
+      
+    .status-in-progress {
+        color: rgb(116, 108, 0);
+      }
+      
+      .project-card .status-closed {
+        color: rgb(151, 0, 0);
+      }
+  }
+  
+
+  
+  .project-card .title {
+    font-size: medium;
+    margin: 0 0 5px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: calc(100% - 10px);
+    flex-shrink: 0;
+    min-height: 20px;
+    line-height: 1.2;
+    display: block; /* Ensure block display */
+    color: #333; /* Ensure visible text color */
+  }
+  
+  .project-card .postedDate {
+    font-size: x-small;
+    color: rgb(144, 144, 144);
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .project-card .skills {
+    margin-top: 5px;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    max-height: 40px;
+    overflow-y: auto;
+    min-height: 24px; /* Ensure minimum height for visibility */
+  }
+  
+  .project-card .skill {
+    font-size: small;
+    padding: 1px 10px;
+    border: solid 1px #d8d8d8;
+    color: #616161;
+    border-radius: 7px;
+    cursor: pointer;
+    background-color: #e3e3e3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block; /* Ensure inline-block display */
+    max-width: calc(100% - 20px); /* Account for padding */
+  }
+  
+  .project-card .divider {
+    margin-top: auto;
+    background-color: #d8d8d8;
+    width: 100%;
+    height: 1px;
+  }
+  
+  .project-card .bottom {
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+    right: 15px;
+    background-color: #f4f4f4;
+  }
+  
+  .project-card .location {
+    color: rgb(144, 144, 144);
+    font-size: small;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 60%;
+  }
+  
+  .project-card .apply-btn {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: #68a6e1;
+    color: white;
+    flex-shrink: 0;
+  }
+  
+  /* Add hover effect */
+  .project-card:hover {
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+  }

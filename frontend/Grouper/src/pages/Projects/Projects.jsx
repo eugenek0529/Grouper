@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 import ProjectPost from '../../components/ProjectPost/ProjectPost';
 import CreateProjectPost from '../../components/CreateProjectPost/CreateProjectPost';
+import { AuthContext } from '../../contexts/authContext';
 import './projects.css';
 
 function Projects() {
@@ -11,14 +13,16 @@ function Projects() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [showSkillsDropdown, setShowSkillsDropdown] = useState(false);
-  
-  // Get current page from URL or default to 1
-  const currentPage = parseInt(searchParams.get('page')) || 1;
-  const ITEMS_PER_PAGE = 12;
-  const TOTAL_ITEMS = 50;
-  const totalPages = Math.ceil(TOTAL_ITEMS / ITEMS_PER_PAGE);
+  const [posts, setPosts] = useState([]);
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [location, setLocation] = useState('');
+  const [meetingStyle, setMeetingStyle] = useState('');
+  const [status, setStatus] = useState('');
 
-  // Placeholder available skills
+  const { user } = useContext(AuthContext);
+  let currentUser = user ? user._id : null;
+
+  // Available options
   const AVAILABLE_SKILLS = [
     'React', 'Node.js', 'Python', 'JavaScript', 'TypeScript',
     'Java', 'C++', 'MongoDB', 'PostgreSQL', 'AWS',
@@ -26,21 +30,35 @@ function Projects() {
     'DevOps', 'UI/UX', 'Mobile Development', 'Cloud Computing'
   ];
 
-  const handlePageChange = (newPage) => {
-    setSearchParams({ 
-      page: newPage.toString(),
-      ...(searchTerm && { search: searchTerm }),
-      ...(selectedSkills.length > 0 && { skills: selectedSkills.join(',') })
-    });
-  };
+  const MEETING_STYLES = ['online', 'in-person', 'hybrid'];
+  const PROJECT_STATUSES = ['open', 'in-progress', 'closed'];
+
+  // Fetch posts with filters
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        // Build query parameters based on filters
+        const queryParams = new URLSearchParams();
+        
+        if (searchTerm) queryParams.set('title', searchTerm);
+        if (selectedSkills.length > 0) queryParams.set('tags', selectedSkills.join(','));
+        if (location) queryParams.set('location', location);
+        if (meetingStyle) queryParams.set('meetingStyle', meetingStyle.toLowerCase());
+        if (status) queryParams.set('project_status', status);
+
+        const response = await axios.get(`http://localhost:8000/api/posts/getPosts?${queryParams}`);
+        setPosts(response.data);
+      } catch (error) {
+        console.log('Failed to fetch posts:', error);
+      }
+    };
+
+    fetchPosts();
+  }, [searchTerm, selectedSkills, location, meetingStyle, status]);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setSearchParams({ 
-      page: '1',
-      ...(searchTerm && { search: searchTerm }),
-      ...(selectedSkills.length > 0 && { skills: selectedSkills.join(',') })
-    });
+    // The useEffect will trigger the fetch with updated filters
   };
 
   const toggleSkill = (skill) => {
@@ -56,18 +74,41 @@ function Projects() {
   const clearFilters = () => {
     setSelectedSkills([]);
     setSearchTerm('');
-    setSearchParams({ page: '1' });
+    setLocation('');
+    setMeetingStyle('');
+    setStatus('');
   };
 
-  const openPost = () => setDisplayPost(true);
-  const closePost = () => setDisplayPost(false);
+  const openPost = (post) => {
+    setSelectedPost(post);
+    setDisplayPost(true);
+  };
+  
+  const closePost = () => {
+    setDisplayPost(false);
+    setSelectedPost(null);
+  };
+
   const openCreatePost = () => setDisplayCreatePost(true);
   const closeCreatePost = () => setDisplayCreatePost(false);
 
-  // Generate placeholder projects for current page
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentProjects = [...Array(Math.min(ITEMS_PER_PAGE, TOTAL_ITEMS - startIndex))];
+  const getStatusClass = (status) => {
+    switch (status?.toLowerCase()) {
+      case 'open':
+        return 'status-open';
+      case 'in-progress':
+        return 'status-in-progress';
+      case 'closed':
+        return 'status-closed';
+      default:
+        return '';
+    }
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+  };
 
   return (
     <div className="projects-container">
@@ -75,9 +116,14 @@ function Projects() {
         <div className="header-content">
           <h1>Browse Projects</h1>
           <button 
-            onClick={openCreatePost}
-            className="create-project-btn"
-          >
+            onClick={() => {
+              if (currentUser) {
+                openCreatePost();
+              } else {
+                alert('Please login to post your idea');
+              }
+            }}
+            className="create-project-btn">
             Create Project
           </button>
         </div>
@@ -91,6 +137,7 @@ function Projects() {
               className="search-input"
             />
             
+            {/* Skills Dropdown */}
             <div className="skills-filter">
               <button 
                 type="button"
@@ -129,12 +176,37 @@ function Projects() {
               )}
             </div>
 
+            {/* Meeting Style Select */}
+            <select
+              value={meetingStyle}
+              onChange={(e) => setMeetingStyle(e.target.value)}
+              className="filter-select"
+            >
+              <option value="">Meeting Style</option>
+              {MEETING_STYLES.map(style => (
+                <option key={style} value={style}>{style}</option>
+              ))}
+            </select>
+
+            {/* Status Select */}
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              className="filter-select"
+            >
+              <option value="">Status</option>
+              {PROJECT_STATUSES.map(status => (
+                <option key={status} value={status}>{status}</option>
+              ))}
+            </select>
+
             <button type="submit" className="search-button">
               Search
             </button>
           </form>
 
-          {(selectedSkills.length > 0 || searchTerm) && (
+          {/* Active Filters */}
+          {(selectedSkills.length > 0 || searchTerm || location || meetingStyle || status) && (
             <div className="active-filters">
               {selectedSkills.map(skill => (
                 <span key={skill} className="filter-tag">
@@ -142,7 +214,7 @@ function Projects() {
                   <button onClick={() => toggleSkill(skill)}>×</button>
                 </span>
               ))}
-              {(selectedSkills.length > 0 || searchTerm) && (
+              {(selectedSkills.length > 0 || searchTerm || location || meetingStyle || status) && (
                 <button onClick={clearFilters} className="clear-all">
                   Clear all filters
                 </button>
@@ -152,30 +224,30 @@ function Projects() {
         </div>
       </div>
 
-
-
       <ul className="projects-grid">
-        {currentProjects.map((_, index) => (
+        {posts.map((post) => (
           <li 
-            key={startIndex + index} 
+            key={post._id} 
             className="project-card" 
-            onClick={openPost}
+            onClick={() => openPost(post)}
           >
-            <span className="status">Active</span>
-            <h3 className="title">Project {startIndex + index + 1}</h3>
-            <span className="postedDate">Posted 2024-01-01</span>
+            <span className={`status ${getStatusClass(post.project_status)}`}>
+              {post.project_status || "Status"}
+            </span>
+            <h3 className="title">{post.title}</h3>
+            <span className="postedDate">Posted {formatDate(post.createdAt)}</span>
             <div className="skills">
-              <div className="skill">React</div>
-              <div className="skill">Node.js</div>
-              <div className="skill">MongoDB</div>
+              {post.tags?.map((tag, index) => (
+                <div key={index} className="skill">{tag}</div>
+              ))}
             </div>
             <div className="divider"></div>
             <div className="bottom">
-              <span className="location">Remote</span>
+              <span className="location">{post.location || "Remote"}</span>
               <button 
                 onClick={(e) => {
                   e.stopPropagation();
-                  openPost();
+                  openPost(post);
                 }} 
                 className="apply-btn"
               >
@@ -186,32 +258,12 @@ function Projects() {
         ))}
       </ul>
 
-      <div className="pagination">
-        <button
-          disabled={currentPage === 1}
-          onClick={() => handlePageChange(currentPage - 1)}
-          className="pagination-btn"
-        >
-          Previous
-        </button>
-        <span className="page-info">
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          disabled={currentPage === totalPages}
-          onClick={() => handlePageChange(currentPage + 1)}
-          className="pagination-btn"
-        >
-          Next
-        </button>
-      </div>
-
       {displayPost && (
-        <ProjectPost closePost={closePost} />
+        <ProjectPost post={selectedPost} closePost={closePost} />
       )}
 
       {displayCreatePost && (
-        <CreateProjectPost closeCreatePost={closeCreatePost} />
+        <CreateProjectPost closeCreatePost={closeCreatePost} userId={currentUser} />
       )}
     </div>
   );

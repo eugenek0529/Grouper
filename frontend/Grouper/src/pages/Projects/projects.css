@@ -174,6 +174,53 @@
   }
 
 
+  .filter-select {
+    padding: 10px 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    min-width: 150px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+.filter-select:hover {
+    background-color: #f5f5f5;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: #68a6e1;
+}
+
+.filter-select option {
+    padding: 10px;
+}
+
+.search-button {
+    padding: 10px 20px;
+    background-color: #68a6e1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.2s;
+}
+
+.search-button:hover {
+    background-color: #5590c7;
+}
+
+
+
+
+
+
   /* filter */
   .filters-container {
     width: 100%;
@@ -201,7 +248,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 16px;
+    font-size: 14px;
   }
   
   .skills-dropdown-btn:hover {

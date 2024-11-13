@@ -11,13 +11,14 @@
   
   .discover-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
     gap: 20px;
     list-style-type: none;
     padding: 0;
   }
   
-.project-card {
+
+  .project-card {
     background-color: #f4f4f4;
     padding: 10px 15px;
     border-radius: 8px;
@@ -25,20 +26,45 @@
     text-align: left;
     cursor: pointer;
 
-    height: 160px;
+    height: 300px;
 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 
+    position: relative;
+    
+
     .status {
         font-size: x-small;
-        color: green;
+        color: green;  
+        
+        &.status-open {
+            color: green; /* Green for Open */
+        }
+    
+        &.status-in-progress {
+        color: rgb(116, 108, 0); /* Yellow for In-Progress */ 
+        }  
+    
+        &.status-closed {
+            color: rgb(151, 0, 0); /* Red for Closed */
+        }
     }
 
+    
+
     .title {
-        margin: 0;
-    }
+        font-size: medium;
+        margin: 0 0 5px 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: calc(100% - 10px); /* Account for padding */
+        flex-shrink: 0; /* Prevent title from shrinking */
+        min-height: 20px; /* Ensure minimum height */
+        line-height: 1.2; /* Improve text visibility */
+      }
 
     .postedDate {
         font-size: x-small;
@@ -50,6 +76,10 @@
         margin-top: 5px;
         display: flex;
         gap: 5px;
+        max-height: 10px;
+        
+
+        
 
         .skill {
             font-size: small;
@@ -59,6 +89,9 @@
             border-radius: 7px;
             cursor: pointer;
             background-color: #e3e3e3;
+
+            white-space: nowrap; /* Prevents text wrapping within tags */
+
         }
     }
 
@@ -87,11 +120,7 @@
             cursor: pointer;
             background-color: #68a6e1;
             color: white;
+            flex-shrink: 0;
         }
     }
   }
-
-
-
-
-  
