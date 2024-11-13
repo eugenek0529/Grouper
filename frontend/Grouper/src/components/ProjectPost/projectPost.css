@@ -98,7 +98,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     flex: 2;
-    height: 60%;
+    height: 100%;
 
     .category {
         font-weight:550;

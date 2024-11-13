@@ -1,18 +1,30 @@
-import React, { useState } from 'react';
-import './CreateProjectPost.css'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import './CreateProjectPost.css';
 
-const CreateProjectPost = ({ closeCreatePost }) => {  // Changed from onClose to closeCreatePost
+const CreateProjectPost = ({ closeCreatePost, userId }) => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    status: 'Active',
+    project_status: 'open',
+    meetingStyle: 'online',
+    capacity: 1,
     location: '',
-    skills: [],
-    requirements: '',
-    compensation: '',
-    deadline: '',
-    creator: ''
+    tags: [], 
+    creatorId: null, // added to match backend
+    applicants: [], // added to match backend
+    members: [] // added to match backend
   });
+
+  useEffect(() => {
+    if (userId) {
+      console.log('Logged in as', userId);
+    } else {
+      console.log('No user id');
+    }
+  }, [userId]);
+
+
 
   const [skillInput, setSkillInput] = useState('');
 
@@ -23,25 +35,39 @@ const CreateProjectPost = ({ closeCreatePost }) => {  // Changed from onClose to
     'DevOps', 'UI/UX', 'Mobile Development', 'Cloud Computing'
   ];
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const projectData = {
-      ...formData,
-      postedDate: new Date().toISOString().split('T')[0]
-    };
-    
-    // Here you would typically send the data to your backend
-    console.log('Submitting project:', projectData);
-    
-    // Close the modal after submission
-    closeCreatePost();
+    console.log(formData)
+    try {
+      const response = await axios.post('http://localhost:8000/api/posts/createPost', {
+        title: formData.title,
+        creatorId: userId,
+        description: formData.description,
+        location: formData.location,
+        meetingStyle: formData.meetingStyle,
+        tags: formData.tags,
+        capacity: formData.capacity,
+        project_status: formData.project_status,
+        applicants: formData.applicants,
+        members: formData.members
+      });
+
+      if (response.status === 200) {
+        console.log('Project created successfully:', response.data);
+        closeCreatePost();
+      }
+    } catch (error) {
+      console.error('Error creating project:', error);
+      // Here you could add error handling UI feedback
+      alert('Failed to create project. Please try again.');
+    }
   };
 
   const addSkill = () => {
-    if (skillInput && !formData.skills.includes(skillInput)) {
+    if (skillInput && !formData.tags.includes(skillInput)) {
       setFormData(prev => ({
         ...prev,
-        skills: [...prev.skills, skillInput]
+        tags: [...prev.tags, skillInput]
       }));
       setSkillInput('');
     }
@@ -50,7 +76,7 @@ const CreateProjectPost = ({ closeCreatePost }) => {  // Changed from onClose to
   const removeSkill = (skillToRemove) => {
     setFormData(prev => ({
       ...prev,
-      skills: prev.skills.filter(skill => skill !== skillToRemove)
+      tags: prev.tags.filter(skill => skill !== skillToRemove)
     }));
   };
 
@@ -70,13 +96,7 @@ const CreateProjectPost = ({ closeCreatePost }) => {  // Changed from onClose to
                 className="title"
                 required
               />
-              <input
-                type="text"
-                value={formData.creator}
-                onChange={e => setFormData(prev => ({ ...prev, creator: e.target.value }))}
-                placeholder="Creator Name"
-                className="creator"
-              />
+              
               <input
                 type="text"
                 value={formData.location}
@@ -97,45 +117,45 @@ const CreateProjectPost = ({ closeCreatePost }) => {  // Changed from onClose to
                   placeholder="Enter detailed project description"
                   required
                 />
-
-                <h3>Requirements</h3>
-                <textarea
-                  value={formData.requirements}
-                  onChange={e => setFormData(prev => ({ ...prev, requirements: e.target.value }))}
-                  placeholder="Enter project requirements"
-                />
               </div>
 
               <div className="bottom-right">
                 <div className="form-group">
                   <label className="category">Status</label>
                   <select
-                    value={formData.status}
-                    onChange={e => setFormData(prev => ({ ...prev, status: e.target.value }))}
+                    value={formData.project_status}
+                    onChange={e => setFormData(prev => ({ ...prev, project_status: e.target.value }))}
                   >
-                    <option value="Active">Active</option>
-                    <option value="Draft">Draft</option>
-                    <option value="Closed">Closed</option>
+                    <option value="Open">open</option>
+                    <option value="In-progress">in-progress</option>
+                    <option value="Closed">closed</option>
                   </select>
                 </div>
 
                 <div className="form-group">
-                  <label className="category">Compensation</label>
-                  <input
-                    type="text"
-                    value={formData.compensation}
-                    onChange={e => setFormData(prev => ({ ...prev, compensation: e.target.value }))}
-                    placeholder="e.g., $50/hr, $5000 fixed"
-                  />
+                  <label className="category">Meeting Style</label>
+                  <select
+                    value={formData.meetingStyle}
+                    onChange={e => setFormData(prev => ({ ...prev, meetingStyle: e.target.value }))}
+                  >
+                    <option value="Online">online</option>
+                    <option value="In-person">in-person</option>
+                    <option value="Hybrid">hybrid</option>
+                  </select>
                 </div>
 
                 <div className="form-group">
-                  <label className="category">Application Deadline</label>
-                  <input
-                    type="date"
-                    value={formData.deadline}
-                    onChange={e => setFormData(prev => ({ ...prev, deadline: e.target.value }))}
-                  />
+                  <label className="category">Capacity</label>
+                  <select
+                    value={formData.capacity}
+                    onChange={e => setFormData(prev => ({ ...prev, capacity: parseInt(e.target.value) }))}
+                  >
+                    {[...Array(20)].map((_, index) => (
+                      <option key={index + 1} value={index + 1}>
+                        {index + 1}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div className="form-group">
@@ -155,7 +175,7 @@ const CreateProjectPost = ({ closeCreatePost }) => {  // Changed from onClose to
                     </button>
                   </div>
                   <div className="skills">
-                    {formData.skills.map(skill => (
+                    {formData.tags.map(skill => (
                       <span key={skill} className="skill">
                         {skill}
                         <button
