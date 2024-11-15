@@ -1,16 +1,19 @@
-import './projectPost.css'
+import "./projectPost.css";
 
-
-export default function ProjectPost({post, closePost}) {
+export default function ProjectPost({ post, closePost }) {
   return (
-    <div className='projectPost' onClick={closePost}>
+    <div className="projectPost" onClick={closePost}>
       <div className="projectPost-content" onClick={(e) => e.stopPropagation()}>
-        <button className="close-btn" onClick={closePost}>x</button>
-        
+        <button className="close-btn" onClick={closePost}>
+          x
+        </button>
+
         <div className="top">
-          <h2 className='title'>{post.title}</h2>
-          <span className='creator'>{post.creatorId || "Creator ID"}</span>
-          <span className='location'>{post.location}</span>
+          <h2 className="title">{post.title}</h2>
+          <span className="creator">
+            {post.creatorId.fullname || "Creator ID"}
+          </span>
+          <span className="location">{post.location}</span>
         </div>
 
         <div className="divider"></div>
@@ -30,13 +33,15 @@ export default function ProjectPost({post, closePost}) {
             <div className="category">Skills looking for:</div>
             <div className="skills">
               {post.tags.map((tag, index) => (
-                <div key={index} className="skill">{tag}</div>
+                <div key={index} className="skill">
+                  {tag}
+                </div>
               ))}
             </div>
-            <button className='apply-btn'>Apply</button>
+            <button className="apply-btn">Apply</button>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
