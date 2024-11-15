@@ -6,4 +6,7 @@ const router = express.Router();
 router.post("/createPost", createPost);
 router.get("/getPosts", getPosts);
 
+// hanle apply (edit post)
+router.post()
+
 export default router;

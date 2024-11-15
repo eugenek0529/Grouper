@@ -30,6 +30,7 @@ export const AuthProvider = ({children}) => {
             const response = await axios.post('http://localhost:8000/api/auth/login', { username, password }, { withCredentials: true });
             // const isVerified = await verifyToken();
             // return isVerified;
+            // response.data has id, fullname, username
             setUser(response.data);
             return true;
         } catch (error) {
