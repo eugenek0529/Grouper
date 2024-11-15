@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './CreateProjectPost.css';
 
-const CreateProjectPost = ({ closeCreatePost, userId }) => {
+const CreateProjectPost = ({ closeCreatePost, userId, isEditing = false, existingPost = null }) => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -17,12 +17,21 @@ const CreateProjectPost = ({ closeCreatePost, userId }) => {
   });
 
   useEffect(() => {
-    if (userId) {
-      console.log('Logged in as', userId);
-    } else {
-      console.log('No user id');
+    if (isEditing && existingPost) {
+      setFormData({
+        title: existingPost.title,
+        description: existingPost.description,
+        project_status: existingPost.project_status,
+        meetingStyle: existingPost.meetingStyle,
+        capacity: existingPost.capacity,
+        location: existingPost.location,
+        tags: existingPost.tags,
+        creatorId: existingPost.creatorId,
+        applicants: existingPost.applicants,
+        members: existingPost.members
+      });
     }
-  }, [userId]);
+  }, [isEditing, existingPost]);
 
 
 
@@ -37,29 +46,64 @@ const CreateProjectPost = ({ closeCreatePost, userId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData)
     try {
-      const response = await axios.post('http://localhost:8000/api/posts/createPost', {
-        title: formData.title,
-        creatorId: userId,
-        description: formData.description,
-        location: formData.location,
-        meetingStyle: formData.meetingStyle,
-        tags: formData.tags,
-        capacity: formData.capacity,
-        project_status: formData.project_status,
-        applicants: formData.applicants,
-        members: formData.members
-      });
+      let response;
+      
+      if (isEditing) {
+        // Update existing post
+        response = await axios.put(`http://localhost:8000/api/posts/${existingPost._id}`, {
+          title: formData.title,
+          description: formData.description,
+          location: formData.location,
+          meetingStyle: formData.meetingStyle,
+          tags: formData.tags,
+          capacity: formData.capacity,
+          project_status: formData.project_status,
+          // Preserve existing applicants and members
+          applicants: formData.applicants,
+          members: formData.members
+        });
+      } else {
+        // Create new post
+        response = await axios.post('http://localhost:8000/api/posts/createPost', {
+          title: formData.title,
+          creatorId: userId,
+          description: formData.description,
+          location: formData.location,
+          meetingStyle: formData.meetingStyle,
+          tags: formData.tags,
+          capacity: formData.capacity,
+          project_status: formData.project_status,
+          applicants: formData.applicants,
+          members: formData.members
+        });
+      }
 
       if (response.status === 200) {
-        console.log('Project created successfully:', response.data);
+        console.log(isEditing ? 'Project updated successfully:' : 'Project created successfully:', response.data);
         closeCreatePost();
       }
     } catch (error) {
-      console.error('Error creating project:', error);
-      // Here you could add error handling UI feedback
-      alert('Failed to create project. Please try again.');
+      console.error(isEditing ? 'Error updating project:' : 'Error creating project:', error);
+      alert(isEditing ? 'Failed to update project. Please try again.' : 'Failed to create project. Please try again.');
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!window.confirm('Are you sure you want to delete this project? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      const response = await axios.delete(`http://localhost:8000/api/posts/${existingPost._id}`);
+      
+      if (response.status === 200) {
+        console.log('Project deleted successfully');
+        closeCreatePost(); // Close the modal after successful deletion
+      }
+    } catch (error) {
+      console.error('Error deleting project:', error);
+      alert('Failed to delete project. Please try again.');
     }
   };
 
@@ -190,9 +234,22 @@ const CreateProjectPost = ({ closeCreatePost, userId }) => {
                   </div>
                 </div>
 
-                <button type="submit" className="create-btn">
-                  Create Project
-                </button>
+                <div className="button-group">
+                  <button type="submit" className="create-btn">
+                    {isEditing ? 'Update Project' : 'Create Project'}
+                  </button>
+                  
+                  {isEditing && (
+                    <button 
+                      type="button" 
+                      onClick={handleDelete}
+                      className="delete-btn"
+                    >
+                      Delete
+                    </button>
+                  )}
+                </div>
+
               </div>
             </div>
           </form>
