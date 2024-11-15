@@ -80,17 +80,113 @@
     align-items: flex-start;
     text-align: left;
     flex: 3;
+    gap: 30px; /* Adds space between description and applicants sections */
+  }
+  
+  .description-section {
+    width: 100%;
+  }
+  
+  .description-section h3 {
+    font-weight: 100;
+    margin: 5px 0px;
+  }
+  
+  .description-section p {
+    font-size: smaller;
+    font-weight: 50;
+    margin-bottom: 20px;
+  }
+  
+  .applicants-section {
+    width: 100%;
+  }
+  
+  .applicants-section h3 {
+    font-weight: 100;
+    margin: 5px 0px 15px 0px;
+  }
+  
+  .applicants-list {
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+  }
+  
+  .applicant-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    background-color: #f8f8f8;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+  }
+  
+  .applicant-name {
+    font-size: 0.9rem;
+    color: #333;
+  }
+  
+  .applicant-buttons {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .accept-btn, .decline-btn {
+    padding: 4px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background-color 0.2s;
+  }
+  
+  .accept-btn {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .accept-btn:hover {
+    background-color: #45a049;
+  }
+  
+  .decline-btn {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .decline-btn:hover {
+    background-color: #da190b;
+  }
+  
+  .no-applicants {
+    color: #666;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .applicants-list::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .applicants-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+  
+  .applicants-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+  }
+  
+  .applicants-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 
-    h3{
-        font-weight: 100;
-        margin: 5px 0px;
-    }
 
-    p {
-        font-size:smaller;
-        font-weight: 50;
-    }
-}
 
 .bottom-right {
     display: flex;
@@ -125,16 +221,23 @@
         }
     }
 
-    .apply-btn {
-        padding: 10px 30px;
-        border-radius: 5px;
-        border: none;
-        cursor: pointer;
-        background-color: #2592f8;
-        color: white;
+    .buttons {
+        .apply-btn, .edit-btn {
+            padding: 10px 30px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            background-color: #2592f8;
+            color: white;
+            margin-left: 5px;   
+        }
 
+        .edit-btn {
+            background-color: #767676aa;
+        }
         align-self: flex-end;
         margin-top: auto;
     }
+    
 
 }

@@ -160,19 +160,36 @@
     background-color: rgba(0,0,0,0.1);
   }
   
-  .create-btn {
-    width: 100%;
+  .button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .create-btn, .delete-btn {
+    flex: 1; 
     padding: 10px;
-    background-color: #68a6e1;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
     font-weight: 500;
-    margin-top: 20px;
+    transition: background-color 0.3s;
+  }
+  
+  .create-btn {
+    background-color: #68a6e1;
   }
   
   .create-btn:hover {
     background-color: #68a6e1e9;
+  }
+  
+  .delete-btn {
+    background-color: #dc3545;
+  }
+  
+  .delete-btn:hover {
+    background-color: #c82333;
   }

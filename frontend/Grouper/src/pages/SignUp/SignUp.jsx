@@ -21,7 +21,7 @@ function SignUp() {
     const handleSignup = async (e) => {
         e.preventDefault(); 
         try {
-            const res = await axios.post(`/api/auth/signup`, {fullname, username, password});
+            const res = await axios.post(`http://localhost:8000/api/auth/signup`, {fullname, username, password});
             if (res.status === 200) {
                 alert('Sign up successful')
                 setFullname('')
