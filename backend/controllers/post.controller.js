@@ -52,14 +52,16 @@ export const getPosts = async (req, res) => {
     if (req.query.title) {
       filter.title = { $regex: req.query.title, $options: "i" }; // 'i' for case-insensitive
     }
-    if (req.query.creatorId) filter.creatorId = req.query.creatorId;
     if (req.query.location) filter.location = req.query.location;
     if (req.query.meetingStyle) filter.meetingStyle = req.query.meetingStyle;
     if (req.query.tags) filter.tags = { $in: req.query.tags.split(",") };
     if (req.query.capacity) filter.capacity = parseInt(req.query.capacity);
     if (req.query.project_status) filter.project_status = req.query.project_status;
 
-    const posts = await Post.find(filter);
+    const posts = await Post.find(filter)
+      .populate('creatorId', 'fullname')
+      .populate('applicants', 'fullname')
+      .populate('members', 'fullname');
     res.status(200).json(posts);
   } catch (err) {
     res.status(500).json({ error: err.message });
