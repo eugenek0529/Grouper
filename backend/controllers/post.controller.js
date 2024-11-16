@@ -1,4 +1,5 @@
 import Post from "../models/post.model.js";
+import User from "../models/user.model.js";
 
 export const createPost = async (req, res) => {
   try{
@@ -15,7 +16,7 @@ export const createPost = async (req, res) => {
       capacity,
       project_status,
       applicants,
-      members
+      members: [creatorId]
     });
 
     console.log(newPost);
@@ -107,8 +108,19 @@ export const applyToPost = async (req, res) => {
       {new: true},
     )
 
+    // Now add it to applied list in user object
+    const updatedUser = await User.findByIdAndUpdate(
+      userId, 
+      {$push: {applied: postId}}, 
+      {new:true}
+    )
+
     if (!updatedPost) {
       return res.status(500).json({ error: 'Failed to update post' });
+    }
+
+    if(!updatedUser) {
+      return res.status(500).json({ error: 'Failed to update User' });
     }
 
     return res.status(200).json({
@@ -194,6 +206,20 @@ export const deletePost = async (req, res) => {
       return res.status(404).json({ error: 'Post not found' });
     }
 
+    const {applicants, members} = existingPost; 
+
+    // remove postId from users' applied and joined
+    const userIds = [...new Set([...applicants, ...members])]
+    await User.updateMany(
+      {_id: {$in: userIds}}, 
+      {
+        $pull: {
+          applied: postId, 
+          joined: postId, 
+        }
+      }
+    )
+
     // Delete the post
     await Post.findByIdAndDelete(postId);
 
@@ -233,16 +259,41 @@ export const acceptApplicant = async (req, res) => {
       return res.status(400).json({ error: 'User is not an applicant for this post' });
     }
 
+    //
     // Update the post: move applicant to members and remove from applicants
-    post.applicants = post.applicants.filter((id) => id.toString() !== applicantId);
-    if (!post.members.includes(applicantId)) {
-      post.members.push(applicantId);
+    //
+    const updatedPost = await Post.findByIdAndUpdate(
+      postId, 
+      {
+        $push: {members: applicantId}, 
+        $pull: {applicants: applicantId}
+      },
+      {new:true}
+    ); 
+    if (!updatedPost) {
+      return res.status(500).json({ error: 'Failed to update post from acceptApplicant' });
     }
-    await post.save();
+
+    //
+    // update the user: remove postId from applied and add postId to joined
+    //
+    const updatedUser = await User.findByIdAndUpdate(
+      applicantId, 
+      {
+        $push: {joined: postId}, 
+        $pull: {applied: postId}
+      }, 
+      {new:true}
+    )
+    if(!updatedUser) {
+      return res.status(500).json({ error: 'Failed to update User from acceptApplicant' });
+    }
+    
+
 
     res.status(200).json({
       message: 'Applicant accepted successfully',
-      post,
+      updatedPost,
     });
   } catch (error) {
     console.error('Error in acceptApplicant:', error);
@@ -273,8 +324,29 @@ export const declineApplicant = async (req, res) => {
     }
 
     // Update the post: remove the applicant from applicants
-    post.applicants = post.applicants.filter((id) => id.toString() !== applicantId);
-    await post.save();
+    const updatedPost  = await Post.findByIdAndUpdate(
+      postId, 
+      {
+        $pull: {applicants: applicantId}
+      }, 
+      {new: true}
+    ); 
+    if (!updatedPost) {
+      return res.status(500).json({ error: 'Failed to update post from acceptApplicant' });
+    }
+
+    // Update the user: remove postId from applied
+    const updatedUser = await User.findByIdAndUpdate(
+      applicantId, 
+      {
+        $pull: {applied: postId}
+      }, 
+      {new:true}
+    )
+    if(!updatedUser) {
+      return res.status(500).json({ error: 'Failed to update User from acceptApplicant' });
+    }
+    
 
     res.status(200).json({
       message: 'Applicant declined successfully',

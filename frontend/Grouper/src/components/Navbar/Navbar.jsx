@@ -20,7 +20,7 @@ function Navbar() {
         <div className="right-section">
             <ul className='nav-menu'>
                 <li><NavLink to="/projects">Projects</NavLink></li>
-                <li><NavLink to="/community">Community</NavLink></li>
+                <li><NavLink to="/groups">Groups</NavLink></li>
                 <li><NavLink to="/portfolio">Portfolio</NavLink></li>
             </ul> 
 

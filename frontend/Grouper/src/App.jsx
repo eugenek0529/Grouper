@@ -13,10 +13,10 @@ import {
 //pages 
 import HomePage from './pages/HomePage/HomePage';
 import Projects from './pages/Projects/Projects';
-import Community from './pages/Community/Community';
 import Portfolio from './pages/Portfolio/Portfolio';
 import SignUp from './pages/SignUp/SignUp';
 import Login from './pages/Login/Login';
+import Groups from './pages/Groups/Groups';
 
 
 
@@ -31,7 +31,7 @@ const router = createBrowserRouter(
     <Route path='/' element={<RootLayout />}>
       <Route index element={<HomePage />} />
       <Route path="/projects" element={<Projects />} />
-      <Route path="/community" element={<Community />} />
+      <Route path="/groups" element={<Groups />} />
       <Route path="/portfolio" element={<Portfolio />} />
       <Route path='/signup' element={<SignUp />}/>
       <Route path='/login' element={<Login />}/>
