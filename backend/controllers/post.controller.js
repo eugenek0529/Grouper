@@ -357,3 +357,38 @@ export const declineApplicant = async (req, res) => {
     res.status(500).json({ error: 'Internal server error', details: error.message });
   }
 };
+
+
+export const getUserGroups = async (req, res) => {
+  try {
+    const {userId} = req.params; 
+
+    const user = await User.findById(userId).populate(
+      {
+        path: 'joined', 
+        select: 'title description location project_status members',
+        populate: {
+          path: 'members',
+          select: 'username fullname'
+        }
+      }
+    )
+    .populate({
+      path: "applied", 
+      select: "title description location project_status"
+    })
+
+    if (!user) {
+      return res.status(404).json({error: "user was not found"})
+    }
+
+    res.status(200).json({
+      joined: user.joined,
+      applied: user.applied,
+    });
+
+  } catch (error) {
+    console.error("Error in getUserGroups:", error);
+    res.status(500).json({ error: "Internal server error", details: error.message });
+  }
+}

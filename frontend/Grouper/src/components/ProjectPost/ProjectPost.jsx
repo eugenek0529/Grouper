@@ -94,100 +94,98 @@ export default function ProjectPost({ post, closePost }) {
 
   return (
     <div className="projectPost" onClick={closePost}>
-      <div className="projectPost-content" onClick={(e) => e.stopPropagation()}>
-        <button className="close-btn" onClick={closePost}>
-          x
-        </button>
+    <div className="projectPost-content" onClick={(e) => e.stopPropagation()}>
+      <button className="close-btn" onClick={closePost}>
+        x
+      </button>
 
-        <div className="top">
-          <h2 className="title">{post.title}</h2>
-          <span className="creator">
-            {post.creatorId.fullname || "Creator ID"}
-          </span>
-          <span className="location">{post.location}</span>
+      <div className="top">
+        <h2 className="title">{post.title}</h2>
+        <span className="creator">
+          {post.creatorId.fullname || "Creator ID"}
+        </span>
+        <span className="location">{post.location}</span>
+      </div>
+
+      <div className="divider"></div>
+
+      <div className="bottom">
+        <div className="bottom-left">
+          <div className="description-section">
+            <h3>Descriptions:</h3>
+            <p>{post.description}</p>
+          </div>
+          
+          {currentUser === post.creatorId._id && (
+            <div className="applicants-section">
+              <h3>Applicants:</h3>
+              <div className="applicants-list">
+                {post.applicants?.length > 0 ? (
+                  post.applicants.map((applicant) => (
+                    <div key={applicant._id} className="applicant-item">
+                      <span className="applicant-name">{applicant.fullname}</span>
+                      <div className="applicant-buttons">
+                        <button
+                          onClick={() => handleAccept(applicant._id)}
+                          className="accept-btn"
+                        >
+                          Accept
+                        </button>
+                        <button
+                          onClick={() => handleDecline(applicant._id)}
+                          className="decline-btn"
+                        >
+                          Decline
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="no-applicants">No applicants yet</p>
+                )}
+              </div>
+            </div>
+          )}
         </div>
 
-        <div className="divider"></div>
-
-        <div className="bottom">
-          <div className="bottom-left">
-          <div className="description-section">
-              <h3>Descriptions:</h3>
-              <p>{post.description}</p>
-            </div>
-            
-            {/* this is list of applicants */}
-            {currentUser === post.creatorId._id && (
-              <div className="applicants-section">
-                <h3>Applicants:</h3>
-                <div className="applicants-list">
-                  {post.applicants?.length > 0 ? (
-                    post.applicants.map((applicant) => (
-                      <div key={applicant._id} className="applicant-item">
-                        <span className="applicant-name">{applicant.fullname}</span>
-                        <div className="applicant-buttons">
-                          <button
-                            onClick={() => handleAccept(applicant._id)}
-                            className="accept-btn"
-                          >
-                            Accept
-                          </button>
-                          <button
-                            onClick={() => handleDecline(applicant._id)}
-                            className="decline-btn"
-                          >
-                            Decline
-                          </button>
-                        </div>
-                      </div>
-                    ))
-                  ) : (
-                    <p className="no-applicants">No applicants yet</p>
-                  )}
-                </div>
+        <div className="bottom-right">
+          <div className="category">Project Status:</div>
+          <p>{post.project_status}</p>
+          <div className="category">Meeting Style:</div>
+          <p>{post.meetingStyle}</p>
+          <div className="category">Capacity:</div>
+          <p>{post.capacity}</p>
+          <div className="category">Skills looking for:</div>
+          <div className="skills">
+            {post.tags.map((tag, index) => (
+              <div key={index} className="skill">
+                {tag}
               </div>
-            )}
-
-            
+            ))}
           </div>
 
-
-
-          <div className="bottom-right">
-            <div className="category">Project Status:</div>
-            <p>{post.project_status}</p>
-            <div className="category">Meeting Style:</div>
-            <p>{post.meetingStyle}</p>
-            <div className="category">Capacity:</div>
-            <p>{post.capacity}</p>
-            <div className="category">Skills looking for:</div>
-            <div className="skills">
-              {post.tags.map((tag, index) => (
-                <div key={index} className="skill">
-                  {tag}
-                </div>
-              ))}
-            </div>
-
-            <div className="buttons">
-
-              {currentUser === post.creatorId._id && (
-                <button onClick={handleEdit}
-                 className="edit-btn">Edit</button>
-              )}
-
-
-              <button onClick={() => {
+          <div className="buttons">
+            {currentUser === post.creatorId._id && (
+              <button onClick={handleEdit} className="edit-btn">
+                Edit
+              </button>
+            )}
+            <button 
+              onClick={() => {
                 if (currentUser) {
-                  handleApply()
+                  handleApply();
                 } else {
                   alert('Please login to apply to the project');
                 }
-              }} className="apply-btn">Apply</button>
-            </div>
+              }} 
+              className="apply-btn"
+            >
+              Apply
+            </button>
           </div>
         </div>
       </div>
     </div>
+  </div>
   );
 }
