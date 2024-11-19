@@ -18,6 +18,10 @@ nav {
 .right-section {
     display: flex;
     align-items: center;
+
+   
+
+
 }
 
 .nav-menu {
@@ -29,9 +33,26 @@ nav {
         text-decoration: none;
         color: inherit;
         margin: 0 20px;
+        position: relative;
     }
+
+    
 }
 
+.nav-menu li a.active {
+    color: #2486e2; 
+  }
+
+
+.nav-menu li a.active::after {
+    content: ''; /* Add the underline */
+    position: absolute;
+    bottom: -2px; /* Position the underline */
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #2486e2; /* Match active color */
+  }
 
 .user-section {
     button {
@@ -64,4 +85,24 @@ nav {
             background-color: #2486e2f3;
         }
     }
+
+    .loggedIn {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+
+        p {
+            color: black;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            padding: 10px 20px;
+        }
+    }
+
+    .logout-btn:hover {
+        background-color: #d9d9d9; 
+    }
 }
+

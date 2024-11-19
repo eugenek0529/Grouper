@@ -7,9 +7,7 @@ function Hero() {
   return (
     <div className='hero'>
       <h1 className='hero-sentence'>Find your project mate</h1>
-        <input className='hero-search'
-        type="text" 
-        placeholder='Search or select your intrests'/>
+        
 
         <div className="tags">
             {

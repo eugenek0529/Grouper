@@ -182,9 +182,9 @@ const CreateProjectPost = ({ closeCreatePost, userId, isEditing = false, existin
                     value={formData.meetingStyle}
                     onChange={e => setFormData(prev => ({ ...prev, meetingStyle: e.target.value }))}
                   >
-                    <option value="Online">online</option>
-                    <option value="In-person">in-person</option>
-                    <option value="Hybrid">hybrid</option>
+                    <option value="online">online</option>
+                    <option value="in-person">in-person</option>
+                    <option value="hybrid">hybrid</option>
                   </select>
                 </div>
 

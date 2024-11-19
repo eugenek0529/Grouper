@@ -1,7 +1,8 @@
 import express from "express";
 import { createPost, getPosts, applyToPost, 
     updatePost, deletePost,
-    acceptApplicant, declineApplicant
+    acceptApplicant, declineApplicant,
+    getUserGroups
 } from "../controllers/post.controller.js";
 
 const router = express.Router();
@@ -21,4 +22,9 @@ router.delete("/:postId", deletePost);
 // handle accept or decline
 router.post('/:postId/applicants/:applicantId/accept', acceptApplicant);
 router.post('/:postId/applicants/:applicantId/decline', declineApplicant);
+
+
+// handle group's page operations
+router.get('/:userId/groups', getUserGroups); 
+
 export default router;
