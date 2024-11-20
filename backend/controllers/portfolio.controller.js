@@ -3,7 +3,7 @@ import Portfolio from '../models/portfolio.model.js';
 // create Portfolio
 export const createPortfolio = async (req, res) => {
 
-    
+    const 
 
     const { fullname, location, contactInfo, description, skills, links, projects } = req.body;
 
