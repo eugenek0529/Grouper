@@ -1,38 +1,36 @@
 import Portfolio from '../models/portfolio.model.js';
+import User from '../models/user.model.js';
 
-// create Portfolio
-export const createPortfolio = async (req, res) => {
-
-    const 
-
-    const { fullname, location, contactInfo, description, skills, links, projects } = req.body;
-
-    try {
-        const newPortfolio = new Portfolio({ fullname, location, contactInfo, description, skills, links, projects });
-        await newPortfolio.save();
-        res.status(201).json({ message: 'Portfolio created successfully', portfolio: newPortfolio });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
-
-// get Portfolio
+// get portfolio
 export const getPortfolio = async (req, res) => {
     try {
-        const portfolio = await Portfolio.findOne({ _id: req.params.id });
+        const { username } = req.params;
+
+        // find the user via username
+        const user = await User.findOne({ username });
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        // Use the fullname to pull portfolio
+        const portfolio = await Portfolio.findOne({ fullname: user.fullname });
         if (!portfolio) return res.status(404).json({ message: 'Portfolio not found' });
+
         res.status(200).json(portfolio);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
 
-// update Portfolio
+// update portfolio by ID
 export const updatePortfolio = async (req, res) => {
     try {
-        const updatedPortfolio = await Portfolio.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const { id } = req.params;
+        const updatedPortfolio = await Portfolio.findByIdAndUpdate(id, req.body, { new: true});
         if (!updatedPortfolio) return res.status(404).json({ message: 'Portfolio not found' });
-        res.status(200).json(updatedPortfolio);
+
+        res.status(200).json({
+            message: 'Portfolio updated successfully',
+            portfolio: updatedPortfolio,
+        });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
