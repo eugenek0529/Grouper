@@ -10,8 +10,8 @@ export const getPortfolio = async (req, res) => {
         const user = await User.findOne({ username });
         if (!user) return res.status(404).json({ message: 'User not found' });
 
-        // Use the fullname to pull portfolio
-        const portfolio = await Portfolio.findOne({ fullname: user.fullname });
+        // Use the ID to pull portfolio
+        const portfolio = await Portfolio.findOne({ userID: user._id });
         if (!portfolio) return res.status(404).json({ message: 'Portfolio not found' });
 
         res.status(200).json(portfolio);
