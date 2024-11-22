@@ -1,27 +1,27 @@
 import User from '../models/user.model.js';
 import bcrypt from "bcryptjs";
 import generateTokenAndCookie from '../utils/generateToken.js';
+import jwt from "jsonwebtoken"; 
 
 export const signup = async (req, res) => {
     try{ 
-        const {fullname, username, password} = req.body;
-
+    const {fullname, username, password} = req.body;
+    
     // checks to see if username is already taken
     const user = await User.findOne({username});
     if (user)
     {return res.status(400).json({error:"Username already exists"})}
     
     // hash password 
-    const hashedPoassword = await bcrypt.hash(password, 10);
-
+    const hashedPassword = await bcrypt.hash(password, 10);
     // new user
-    const newUser = new User
-        ({fullname,username,password: hashedPoassword});
-    
+    const newUser = new User({fullname,username,password: hashedPassword});
+
     // save new user
     if (newUser){
-    generateTokenAndCookie(newUser._id,res);
+    generateTokenAndCookie(newUser._id, newUser.fullname, res);
     await newUser.save();
+
 
     res.status(200).json({
         _id: newUser._id, 
@@ -31,8 +31,8 @@ export const signup = async (req, res) => {
     })}
     else {res.status(400).json({error: "Invalid user data"});}
 
-        }catch(error)
-        {res.status(500).json({error:"error...idk"})} 
+    }catch(error)
+    {res.status(500).json({error:"error...idk"})} 
 };
 
 export const login = async (req, res) => {
@@ -44,20 +44,43 @@ export const login = async (req, res) => {
     if (!user || !CorrectPassword)
     {return res.status(400).json({error: "Invalid username or password"});}
 
-    generateTokenAndCookie(user._id,res);
+    generateTokenAndCookie(user._id, user.fullname,res);
     res.status(200).json({
         _id: user._id, 
         fullname: user.fullname, 
-        username: user.username
+        username: user.username, 
     });
 
     }
     catch(error){res.status(500).json({error:"error...idk"})}
 };
 
+export const verify = async (req, res) => {
+    // if token is valid, enter here
+    // res.status(200).json({ userId: req.user.id });
+
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+        
+        res.status(200).json({
+            _id: user._id,
+            fullname: user.fullname,
+            username: user.username
+        });
+    } catch (error) {
+        res.status(500).json({ error: "Server error during verification" });
+    }
+
+}
+
+
 export const logout = (req,res) => {
     try{
-        res.cookie("jwt","",{maxAge: 0});
+        res.cookie("refreshToken","",{maxAge: 0});
         res.status(200).json({message: "Logged out successfully"});
     }
     catch (error){

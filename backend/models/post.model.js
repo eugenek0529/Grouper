@@ -1,4 +1,4 @@
-// User model
+// Post model
 import mongoose from "mongoose";
 const {Schema} = mongoose
 
@@ -23,8 +23,7 @@ const PostSchema = new Schema({
         enum: ['in-person', 'online', 'hybrid'],
     },
     tags: [{ 
-        type: Schema.Types.ObjectId, 
-        ref: 'Tag',
+        type: String,
         default: [] // default is empty array
     }],
     capacity: {
