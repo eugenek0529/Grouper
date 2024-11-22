@@ -7,8 +7,10 @@ import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import tagsRoutes from "./routes/tags.routes.js";
 import postRoutes from "./routes/post.routes.js";
-import cookieParser from 'cookie-parser';
 import portfolioRoutes from './routes/portfolio.routes.js';
+import cookieParser from 'cookie-parser';
+
+
 // app setup
 dotenv.config();  
 const app = express();  
