@@ -1,6 +1,7 @@
 import User from '../models/user.model.js';
 import bcrypt from "bcryptjs";
 import generateTokenAndCookie from '../utils/generateToken.js';
+import Portfolio from '../models/portfolio.model.js';
 import jwt from "jsonwebtoken"; 
 
 export const signup = async (req, res) => {
@@ -19,14 +20,30 @@ export const signup = async (req, res) => {
 
     // save new user
     if (newUser){
-    generateTokenAndCookie(newUser._id, newUser.fullname, res);
+   
     await newUser.save();
+
+    // initiate new portfolio
+    const newPortfolio = await Portfolio.create({
+        user: newUser._id,
+        location: "",
+        contactInfo: "",
+        description: "",
+        skills: [],
+        links: []
+    });
+
+    newUser.portfolioId = newPortfolio._id;
+    await newUser.save(); 
+
+    generateTokenAndCookie(newUser._id, newUser.fullname, res);
 
 
     res.status(200).json({
         _id: newUser._id, 
         fullname: newUser.fullname, 
         username: newUser.username, 
+        portfolioId: newUser.portfolioId,
         message: "New user created successfully"
     })}
     else {res.status(400).json({error: "Invalid user data"});}
@@ -49,6 +66,7 @@ export const login = async (req, res) => {
         _id: user._id, 
         fullname: user.fullname, 
         username: user.username, 
+        portfolioId: user.portfolioId,
     });
 
     }
@@ -69,7 +87,8 @@ export const verify = async (req, res) => {
         res.status(200).json({
             _id: user._id,
             fullname: user.fullname,
-            username: user.username
+            username: user.username, 
+            portfolioId: user.portfolioId,
         });
     } catch (error) {
         res.status(500).json({ error: "Server error during verification" });

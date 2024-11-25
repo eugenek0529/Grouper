@@ -31,6 +31,7 @@ export const AuthProvider = ({children}) => {
             // const isVerified = await verifyToken();
             // return isVerified;
             // response.data has id, fullname, username
+            console.log(response.data)
             setUser(response.data);
             return true;
         } catch (error) {
@@ -62,7 +63,7 @@ export const AuthProvider = ({children}) => {
 
 
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ user, setUser, login, logout }}>
             {children}
         </AuthContext.Provider>
     )

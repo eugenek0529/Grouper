@@ -21,6 +21,17 @@ export const createPost = async (req, res) => {
 
     console.log(newPost);
 
+    const updatedUser = await User.findByIdAndUpdate(
+      creatorId, 
+      {
+        $push: {joined: newPost._id}, 
+      }, 
+      {new:true}
+    )
+    if (!updatedUser) {
+      return res.status(500).json({ error: 'Failed to update creator to add member' });
+    }
+
     if (newPost){
       await newPost.save();
 
@@ -257,6 +268,15 @@ export const acceptApplicant = async (req, res) => {
     // Check if applicant exists in the applicants array
     if (!post.applicants.includes(applicantId)) {
       return res.status(400).json({ error: 'User is not an applicant for this post' });
+    }
+
+    // proj_06 fix
+    if (post.members.length >= post.capacity) {
+      return res.status(400).json({ 
+        error: 'Cannot accept more members. Project has reached its capacity.',
+        currentMembers: post.members.length,
+        capacity: post.capacity
+      });
     }
 
     //

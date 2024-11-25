@@ -16,6 +16,10 @@ const UserSchema = new Schema({
         ref: 'Post',
         default: [] // default is empty array
     }],
+    portfolioId: {
+        type: Schema.Types.ObjectId, 
+        ref: 'Portfolio',
+    }
 }, { timestamps: true }) 
 
 const User = mongoose.model('User', UserSchema);  //  User is now collection name in db

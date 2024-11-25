@@ -2,20 +2,25 @@
 import mongoose from "mongoose";
 const {Schema} = mongoose
 
-const PortfolioSchema = new mongoose.Schema({
-    fullname: { type: String, required: true },
+const PortfolioSchema = new Schema({
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true, 
+        unique: true, 
+    },
     location: { type: String, required: false },
     contactInfo: { type: String, required: false },
     description: { type: String, required: false },
     skills: { type: [String], required: false }, // Array of skills
-    links: { type: [String], required: false }, // Array of URLs
-    projects: [
+    links: [
         {
-            name: { type: String, required: true },
-            description: { type: String, required: false },
-            role: { type: String, required: false },
-        },
-    ], // Projects array
+            title: { type: String, required: false },
+            url: { type: String, required: true },
+        }
+    ]
+    , // Array of URLs
+    
 }, { timestamps: true });
 
 

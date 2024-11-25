@@ -80,8 +80,10 @@ const CreateProjectPost = ({ closeCreatePost, userId, isEditing = false, existin
       }
 
       if (response.status === 200) {
-        console.log(isEditing ? 'Project updated successfully:' : 'Project created successfully:', response.data);
+        const successMessage = isEditing ? 'Project updated successfully!' : 'Project created successfully!';
         closeCreatePost();
+        alert(successMessage);
+        window.location.reload();
       }
     } catch (error) {
       console.error(isEditing ? 'Error updating project:' : 'Error creating project:', error);
