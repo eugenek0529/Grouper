@@ -54,7 +54,7 @@ function Portfolio() {
         try {
           const response = await axios.get(`http://localhost:8000/api/portfolio/${user._id}`);
           
-          console.log(response.data)
+        //console.log(response.data)
 
           setPortfolioData({
             location: response.data.location || '',
@@ -87,7 +87,7 @@ function Portfolio() {
 
             const payload = {
               location: portfolioData.location,
-              contactInfo: portfolioData.contact,
+              contactInfo: portfolioData.contactInfo,
               skills: portfolioData.skills,
               links: portfolioData.links.map(link => ({ 
                 title: link.title, 
@@ -358,14 +358,14 @@ function Portfolio() {
                               placeholder='contactInfo'
                               onChange={(e) => setPortfolioData({
                                   ...portfolioData,
-                                  contact: e.target.value
+                                  contactInfo: e.target.value
                               })}
                           />
                       </>
                   ) : (
                       <>
                           <p>Location: {portfolioData.location}</p>
-                          <p>Contact: {portfolioData.contactInfo}</p>
+                          <p>ContactInfo: {portfolioData.contactInfo}</p>
                       </>
                   )}
               </div>

@@ -22,6 +22,7 @@ import Groups from './pages/Groups/Groups';
 
 // layouts
 import RootLayout from './layouts/RootLayout/RootLayout';
+import BrowsePortfolio from './pages/BrowsePortfolio/BrowsePortfolio';
 
 
 
@@ -35,9 +36,7 @@ const router = createBrowserRouter(
       <Route path="/portfolio" element={<Portfolio />} />
       <Route path='/signup' element={<SignUp />}/>
       <Route path='/login' element={<Login />}/>
-      {
-        
-      }
+      <Route path='/browsePortfolio/:userId' element={<BrowsePortfolio />} />
     </Route> 
   )
 ) 

@@ -9,6 +9,7 @@ const PortfolioSchema = new Schema({
         required: true, 
         unique: true, 
     },
+    fullname: {type: String, required: false},
     location: { type: String, required: false },
     contactInfo: { type: String, required: false },
     description: { type: String, required: false },

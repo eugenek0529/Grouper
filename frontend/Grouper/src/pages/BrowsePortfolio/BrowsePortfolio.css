@@ -1,0 +1,203 @@
+
+.user-portfolio-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f6f9;
+}
+
+.user-portfolio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.user-portfolio-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-portfolio-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.user-portfolio-icon-default {
+    font-size: 36px;
+    color: #757575;
+}
+
+.user-portfolio-header h1 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.user-portfolio-section {
+    background-color: white;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.user-portfolio-section:hover {
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.user-portfolio-section h2 {
+    color: #34495e;
+    border-bottom: 2px solid #4a90e2;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+}
+
+.user-portfolio-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.user-portfolio-info-item p {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 1rem;
+}
+
+.user-portfolio-skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.user-portfolio-skill-tag {
+    background-color: #4a90e2;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.user-portfolio-skills-container .user-portfolio-skill-tag:hover {
+    background-color: #357abd;
+}
+
+.user-portfolio-links-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.user-portfolio-link-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #4a90e2;
+    text-decoration: none;
+    background-color: #f0f4f8;
+    padding: 8px 15px;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+}
+
+.user-portfolio-link-item:hover {
+    background-color: #4a90e2;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.user-portfolio-projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.user-portfolio-project-card {
+    background-color: #f9fafb;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.user-portfolio-project-card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+    border-color: #4a90e2;
+}
+
+.user-portfolio-project-title {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.user-portfolio-project-description {
+    color: #495057;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.user-portfolio-project-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.user-portfolio-project-detail {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background-color: #e9ecef;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.user-portfolio-empty-state {
+    text-align: center;
+    padding: 40px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+}
+
+.user-portfolio-empty-state p {
+    color: #6c757d;
+    font-size: 1rem;
+}
+
+
+@media (max-width: 768px) {
+    .user-portfolio-container {
+        padding: 10px;
+    }
+
+    .user-portfolio-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .user-portfolio-projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .user-portfolio-header h1 {
+        margin-top: 15px;
+    }
+}

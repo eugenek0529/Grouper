@@ -1,6 +1,7 @@
 import "./projectPost.css";
 import { AuthContext } from '../../contexts/authContext';
 import { useContext, useState } from 'react';
+import { NavLink } from "react-router-dom";
 import CreateProjectPost from "../CreateProjectPost/CreateProjectPost";
 import axios from "axios";
 
@@ -11,6 +12,7 @@ export default function ProjectPost({ post, closePost }) {
   const [isEditing, setIsEditing] = useState(false);
   const { user } = useContext(AuthContext);
   let currentUser = user ? user._id : null;
+  
   
   
 
@@ -59,7 +61,7 @@ export default function ProjectPost({ post, closePost }) {
 
 
   const handleAccept = async (applicantId) => {
-    console.log('from client,', currentUser)
+    //console.log('from client,', currentUser)
     try {
       const response = await axios.post(
         `http://localhost:8000/api/posts/${post._id}/applicants/${applicantId}/accept`,
@@ -101,9 +103,14 @@ export default function ProjectPost({ post, closePost }) {
 
       <div className="top">
         <h2 className="title">{post.title}</h2>
-        <span className="creator">
+        {/* <span className="creator">
           {post.creatorId.fullname || "Creator ID"}
-        </span>
+        </span> */}
+          <NavLink 
+            to={`/browsePortfolio/${post.creatorId._id}`} 
+            className="creator">
+              {post.creatorId.fullname || "Creator ID"}
+          </NavLink>
         <span className="location">{post.location}</span>
       </div>
 
@@ -123,7 +130,13 @@ export default function ProjectPost({ post, closePost }) {
                 {post.applicants?.length > 0 ? (
                   post.applicants.map((applicant) => (
                     <div key={applicant._id} className="applicant-item">
-                      <span className="applicant-name">{applicant.fullname}</span>
+                      {/* <span className="applicant-name">{applicant.fullname}</span> */}
+                      <NavLink 
+                        to={`/browsePortfolio/${applicant._id}`} 
+                        className="applicant-name"
+                      >
+                        {applicant.fullname}
+                      </NavLink>
                       <div className="applicant-buttons">
                         <button
                           onClick={() => handleAccept(applicant._id)}
