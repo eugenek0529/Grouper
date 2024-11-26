@@ -31,6 +31,10 @@
     padding-right: 10px;
 }
 
+.memberName {
+    color: black;
+}
+
 .scroll-container::-webkit-scrollbar {
     width: 8px;
 }

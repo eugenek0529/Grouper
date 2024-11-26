@@ -26,6 +26,7 @@ export const signup = async (req, res) => {
     // initiate new portfolio
     const newPortfolio = await Portfolio.create({
         user: newUser._id,
+        fullname: newUser.fullname, 
         location: "",
         contactInfo: "",
         description: "",

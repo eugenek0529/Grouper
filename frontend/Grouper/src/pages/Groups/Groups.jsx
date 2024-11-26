@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import './groups.css';
 import { AuthContext } from '../../contexts/authContext';
+import { NavLink } from 'react-router-dom';
 
 export default function Groups() {
     const [joinedPosts, setJoinedPosts] = useState([]);
@@ -45,7 +46,15 @@ export default function Groups() {
 
     const getMemberDisplayName = (member) => {
         if (!member) return 'Unknown Member';
-        return member.fullname || member.username || 'Unknown Member';
+        // member.fullname || member.username || 'Unknown Member';
+        return (
+            <NavLink
+                to={`/browsePortfolio/${member._id}`}
+                className={'memberName'}
+            >
+                {member.fullname || member.username || 'Unknown Member'}
+            </NavLink> 
+        )
     };
 
     return (

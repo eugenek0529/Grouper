@@ -46,6 +46,8 @@
 
     .creator, .location {
         font-size: small;
+        text-decoration: none;
+        color: inherit;
     }
 
 }
@@ -80,7 +82,7 @@
     align-items: flex-start;
     text-align: left;
     flex: 3;
-    gap: 30px; /* Adds space between description and applicants sections */
+    gap: 30px; 
   }
   
   .description-section {
